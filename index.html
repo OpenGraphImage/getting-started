@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+  </head>
+  <body class="h-screen">
+    <div class="flex items-center h-full bg-neutral-800">
+      <div class="relative w-[1200px] h-[600px] overflow-hidden mx-auto bg-white" x-data="openGraphImage();">
+
+
+        <!-- Start: Your HTML Template -->
+        <h1 class="flex items-center justify-center h-full text-3xl font-bold underline">
+          <span x-text="params.title"></span>
+        </h1>
+        <!-- End: Your HTML Template -->
+
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('alpine:init', () => {
+
+        Alpine.data('openGraphImage', () => {
+          const params = new URLSearchParams(window.location.search);
+
+          return {
+            params: Object.fromEntries(params.entries()),
+
+            init() {
+              window.__og = window.__og || [];
+
+              window.__og.push(['link', 'https://www.mywebsite.com']);
+
+              this.$nextTick(() => {
+                window.__og.push(['ready']);
+              });
+
+            },
+          };
+        });
+      });
+    </script>
+  </body>
+</html>
